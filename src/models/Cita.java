@@ -1,25 +1,18 @@
 package models;
 
-import modules.ICitas;
+import interfaces.IModel;
 
-public class Cita implements ICitas {
+public class Cita implements IModel {
     private String dia;
     private String hora;
     private Paciente paciente;
     private String motivo;
 
     @Override
-    public void agendarCita(Cita cita) {
-
-    }
-
-    @Override
-    public void editarCita(String idCita, Cita cita) {
-
-    }
-
-    @Override
-    public void eliminarCita(String idCita) {
-
+    public void show() {
+        System.out.println("Dia: " + this.dia);
+        System.out.println("Hora: " + this.hora);
+        System.out.println("Paciente: " + this.paciente);
+        System.out.println("Motivo: " + this.motivo);
     }
 }

@@ -1,8 +1,8 @@
 package models;
 
-import modules.IVacunas;
+import interfaces.IModel;
 
-public class Vacuna implements IVacunas {
+public class Vacuna implements IModel {
     private String fechaVacuna;
     private String nombreVacuna;
     private double peso;
@@ -10,7 +10,11 @@ public class Vacuna implements IVacunas {
     private int edad;
 
     @Override
-    public void agregarVacuna(Vacuna vacuna) {
-
+    public void show() {
+        System.out.println("Fecha de la vacuna: " + this.fechaVacuna);
+        System.out.println("Nombre de la vacuna: " + this.nombreVacuna);
+        System.out.println("Peso: " + this.peso);
+        System.out.println("Altura: " + this.altura);
+        System.out.println("Edad: " + this.edad);
     }
 }

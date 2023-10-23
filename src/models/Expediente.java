@@ -1,10 +1,10 @@
 package models;
 
-import modules.IExpedientes;
+import interfaces.IModel;
 
 import java.util.List;
 
-public class Expediente implements IExpedientes {
+public class Expediente implements IModel {
     private Paciente paciente;
     private Cita cita;
     private String diagnostico;
@@ -12,7 +12,11 @@ public class Expediente implements IExpedientes {
     private List<Vacuna> vacunas;
 
     @Override
-    public Expediente generarExpediente(Paciente paciente, Cita cita, String diagnostico, String medicamentos, List<Vacuna> vacunas) {
-        return null;
+    public void show() {
+        System.out.println("Paciente: " + this.paciente);
+        System.out.println("Cita: " + this.cita);
+        System.out.println("Diagnostico: " + this.diagnostico);
+        System.out.println("Medicamentos: " + this.medicamentos);
+        System.out.println("Vacunas: " + this.vacunas);
     }
 }
