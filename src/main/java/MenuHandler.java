@@ -140,12 +140,8 @@ public class MenuHandler {
         System.out.print("Nombre de la vacuna: ");
         String nombreVacuna = scanner.nextLine();
 
-        // Descripcion de la vacuna
-        System.out.print("Descripcion de la vacuna: ");
-        String descripcionVacuna = scanner.nextLine();
-
         // Crear la vacuna
-        Vacuna vacuna = new Vacuna(nombreVacuna, descripcionVacuna);
+        Vacuna vacuna = new Vacuna(nombreVacuna);
         vacunaRepository.create(vacuna);
     }
 
