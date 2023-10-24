@@ -32,6 +32,9 @@ public class Paciente implements IModel {
         this.fechaNacimiento = fechaNacimiento;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
     @Override
     public void show() {
         System.out.println("Nombre: " + this.nombre);

@@ -7,7 +7,7 @@ import java.util.List;
 
 public class VacunaRepository implements IRepository {
 
-    private List<Object> vacunas = new ArrayList<>();
+    private List<Vacuna> vacunas = new ArrayList<>();
 
     @Override
     public List<Object> get() {
@@ -21,12 +21,12 @@ public class VacunaRepository implements IRepository {
 
     @Override
     public void create(Object object) {
-        vacunas.add(object);
+        vacunas.add((Vacuna) object);
     }
 
     @Override
     public void update(Object object, int id) {
-        vacunas.set(id, object);
+        vacunas.set(id, (Vacuna) object);
     }
 
     @Override

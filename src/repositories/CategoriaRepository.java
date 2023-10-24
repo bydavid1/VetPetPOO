@@ -4,7 +4,6 @@ import interfaces.IRepository;
 import models.Categoria;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class CategoriaRepository implements IRepository {

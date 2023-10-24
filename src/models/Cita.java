@@ -9,6 +9,13 @@ public class Cita implements IModel {
     private Paciente paciente;
     private String motivo;
 
+    public Cita(String dia, String hora, Paciente paciente, String motivo) {
+        this.dia = dia;
+        this.hora = hora;
+        this.paciente = paciente;
+        this.motivo = motivo;
+    }
+
     @Override
     public void show() {
         System.out.println("Dia: " + this.dia);

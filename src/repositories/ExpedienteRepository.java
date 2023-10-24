@@ -4,7 +4,6 @@ import interfaces.IRepository;
 import models.Expediente;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ExpedienteRepository implements IRepository {
