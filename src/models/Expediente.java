@@ -5,6 +5,7 @@ import interfaces.IModel;
 import java.util.List;
 
 public class Expediente implements IModel {
+    private int id;
     private Paciente paciente;
     private Cita cita;
     private String diagnostico;

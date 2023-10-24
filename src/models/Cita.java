@@ -3,6 +3,7 @@ package models;
 import interfaces.IModel;
 
 public class Cita implements IModel {
+    private int id;
     private String dia;
     private String hora;
     private Paciente paciente;

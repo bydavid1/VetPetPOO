@@ -3,17 +3,19 @@ package models;
 import interfaces.IModel;
 
 public class Raza implements IModel {
+    private int id;
     private String nombre;
-    private Categoria categoria;
 
-    public Raza(String nombre, Categoria categoria) {
+    public Raza(String nombre) {
         this.nombre = nombre;
-        this.categoria = categoria;
+    }
+
+    public String getNombre() {
+        return nombre;
     }
 
     @Override
     public void show() {
         System.out.println("Nombre: " + this.nombre);
-        System.out.println("Categoria: " + this.categoria);
     }
 }

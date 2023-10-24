@@ -3,6 +3,7 @@ package models;
 import interfaces.IModel;
 
 public class Paciente implements IModel {
+    private int id;
     private String nombre;
     private String nombreDueno;
     private int edad;
@@ -36,8 +37,8 @@ public class Paciente implements IModel {
         System.out.println("Nombre: " + this.nombre);
         System.out.println("Nombre del dueño: " + this.nombreDueno);
         System.out.println("Edad: " + this.edad);
-        System.out.println("Categoria: " + this.categoria);
-        System.out.println("Raza: " + this.raza);
+        System.out.println("Categoria: " + this.categoria.getNombre());
+        System.out.println("Raza: " + this.raza.getNombre());
         System.out.println("Sexo: " + this.sexo);
         System.out.println("Fecha de inscripción: " + this.fechaInscripcion);
         System.out.println("Altura: " + this.altura);
