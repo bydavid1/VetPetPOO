@@ -3,16 +3,22 @@ package repositories;
 import interfaces.IRepository;
 import models.Raza;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class RazaRepository implements IRepository {
 
-    private List<Raza> razas;
+    private List<Raza> razas = new ArrayList<>();
 
     @Override
     public List<Object> get() {
-        return Collections.singletonList(razas);
+        return new ArrayList<>(razas);
+    }
+
+    @Override
+    public Object getById(int id) {
+        return razas.get(id);
     }
 
     @Override

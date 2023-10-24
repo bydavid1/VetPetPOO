@@ -3,16 +3,22 @@ package repositories;
 import interfaces.IRepository;
 import models.Paciente;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class PacienteRepository implements IRepository {
 
-    private List<Paciente> pacientes;
+    private List<Paciente> pacientes = new ArrayList<>();
 
     @Override
     public List<Object> get() {
-        return Collections.singletonList(pacientes);
+        return new ArrayList<>(pacientes);
+    }
+
+    @Override
+    public Object getById(int id) {
+        return pacientes.get(id);
     }
 
     @Override

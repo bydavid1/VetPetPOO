@@ -1,38 +1,37 @@
 package repositories;
 
 import interfaces.IRepository;
-import models.Expediente;
+import models.Cita;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class ExpedienteRepository implements IRepository {
+public class CitaRepository implements IRepository {
 
-    private List<Expediente> expedientes = new ArrayList<>();
+    private List<Cita> citas = new ArrayList<>();
 
     @Override
     public List<Object> get() {
-        return new ArrayList<>(expedientes);
+        return new ArrayList<>(citas);
     }
 
     @Override
     public Object getById(int id) {
-        return expedientes.get(id);
+        return citas.get(id);
     }
 
     @Override
     public void create(Object object) {
-        expedientes.add((Expediente) object);
+        citas.add((Cita) object);
     }
 
     @Override
     public void update(Object object, int id) {
-        expedientes.set(id, (Expediente) object);
+        citas.set(id, (Cita) object);
     }
 
     @Override
     public void delete(int id) {
-        expedientes.remove(id);
+        citas.remove(id);
     }
 }

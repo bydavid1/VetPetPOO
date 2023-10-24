@@ -3,16 +3,22 @@ package repositories;
 import interfaces.IRepository;
 import models.Categoria;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class CategoriaRepository implements IRepository {
 
-    private List<Categoria> categorias;
+    private List<Categoria> categorias = new ArrayList<>();
 
     @Override
     public List<Object> get() {
-        return Collections.singletonList(categorias);
+        return new ArrayList<>(categorias);
+    }
+
+    @Override
+    public Object getById(int id) {
+        return categorias.get(id);
     }
 
     @Override

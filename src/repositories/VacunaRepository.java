@@ -1,38 +1,37 @@
 package repositories;
 
 import interfaces.IRepository;
-import models.Expediente;
-
+import models.Vacuna;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class ExpedienteRepository implements IRepository {
+public class VacunaRepository implements IRepository {
 
-    private List<Expediente> expedientes = new ArrayList<>();
+    private List<Object> vacunas = new ArrayList<>();
 
     @Override
     public List<Object> get() {
-        return new ArrayList<>(expedientes);
+        return new ArrayList<>(vacunas);
     }
 
     @Override
     public Object getById(int id) {
-        return expedientes.get(id);
+        return vacunas.get(id);
     }
 
     @Override
     public void create(Object object) {
-        expedientes.add((Expediente) object);
+        vacunas.add(object);
     }
 
     @Override
     public void update(Object object, int id) {
-        expedientes.set(id, (Expediente) object);
+        vacunas.set(id, object);
     }
 
     @Override
     public void delete(int id) {
-        expedientes.remove(id);
+        vacunas.remove(id);
     }
 }
+
