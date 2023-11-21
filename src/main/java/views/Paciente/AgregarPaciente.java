@@ -4,11 +4,17 @@
  */
 package views.Paciente;
 
+import models.Categoria;
 import models.Paciente;
+import models.Raza;
+import repositories.CategoriaRepository;
 import repositories.PacienteRepository;
+import repositories.RazaRepository;
 
+import javax.swing.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -76,7 +82,6 @@ public class AgregarPaciente extends javax.swing.JFrame {
 
         jLabel4.setText("Sexo");
 
-        fSexo.setText("jTextField1");
         fSexo.setName("fsexo"); // NOI18N
 
         jLabel5.setText("Pelaje");
@@ -89,12 +94,12 @@ public class AgregarPaciente extends javax.swing.JFrame {
 
         jLabel8.setText("Categoria");
 
-        cbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbCategoria.setModel(llenarComboBoxCategorias());
         cbCategoria.setName("cbCategoria"); // NOI18N
 
         jLabel9.setText("Raza");
 
-        cbRaza.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbRaza.setModel(llenarComboBoxRazas());
         cbRaza.setName("cbRaza"); // NOI18N
 
         jLabel10.setText("Altura");
@@ -228,12 +233,10 @@ public class AgregarPaciente extends javax.swing.JFrame {
         paciente.setNombre(fNombre.getText());
         paciente.setNombreDueno(fDueno.getText());
         paciente.setEdad((int) spEdad.getValue());
-        paciente.setIdCategoria(Integer.parseInt(cbCategoria.getSelectedItem().toString()));
-        paciente.setIdRaza(Integer.parseInt(cbRaza.getSelectedItem().toString()));
         paciente.setSexo(fSexo.getText());
         paciente.setFechaInscripcion(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-        paciente.setAltura((double) spAltura.getValue());
-        paciente.setPeso((double) spPeso.getValue());
+        paciente.setAltura(((Integer) spAltura.getValue()).doubleValue());
+        paciente.setPeso(((Integer) spPeso.getValue()).doubleValue());
         paciente.setPelaje(fPelaJE.getText());
         paciente.setFechaNacimiento(fFechaNacimiento.getText());
         // Save Paciente object
@@ -242,6 +245,47 @@ public class AgregarPaciente extends javax.swing.JFrame {
 
         // Show success message
         javax.swing.JOptionPane.showMessageDialog(this, "Paciente guardado exitosamente");
+
+        clearForm();
+    }
+
+    private void clearForm() {
+        fNombre.setText("");
+        fDueno.setText("");
+        spEdad.setValue(0);
+        cbCategoria.setSelectedIndex(0);
+        cbRaza.setSelectedIndex(0);
+        fSexo.setText("");
+        spAltura.setValue(0);
+        spPeso.setValue(0);
+        fPelaJE.setText("");
+        fFechaNacimiento.setText("");
+    }
+
+    private DefaultComboBoxModel llenarComboBoxCategorias() {
+        CategoriaRepository categoriaRepository = new CategoriaRepository();
+        List<Object> categorias = categoriaRepository.get();
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+
+        for (Object categoria : categorias) {
+            String nombreCategoria = ((Categoria) categoria).getNombre();
+            model.addElement(nombreCategoria);
+        }
+
+        return model;
+    }
+
+    private DefaultComboBoxModel llenarComboBoxRazas() {
+        RazaRepository razaRepository = new RazaRepository();
+        List<Object> razas = razaRepository.get();
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+
+        for (Object raza : razas) {
+            String nombreRaza = ((Raza) raza).getNombre();
+            model.addElement(nombreRaza);
+        }
+
+        return model;
     }
 
     /**

@@ -4,6 +4,16 @@
  */
 package views.Paciente;
 
+import models.Categoria;
+import models.Paciente;
+import models.Raza;
+import repositories.CategoriaRepository;
+import repositories.PacienteRepository;
+import repositories.RazaRepository;
+
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
+
 /**
  *
  * @author byronjimenez
@@ -28,7 +38,7 @@ public class Pacientes extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblPacientes = new javax.swing.JTable();
         btnAgregar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -36,18 +46,9 @@ public class Pacientes extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 18)); // NOI18N
         jLabel1.setText("Pacientes");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        loadDataTable();
+
+        jScrollPane1.setViewportView(tblPacientes);
 
         btnAgregar.setText("Agregar Paciente");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -91,6 +92,34 @@ public class Pacientes extends javax.swing.JFrame {
         agregarPaciente.setVisible(true);
     }
 
+    private void loadDataTable() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Nombre");
+        model.addColumn("Dueño");
+        model.addColumn("Edad");
+        model.addColumn("Sexo");
+        model.addColumn("Fecha Inscripción");
+
+        // Obtener los datos de los pacientes desde el repositorio (ejemplo)
+        PacienteRepository pacienteRepository = new PacienteRepository();
+        List<Object> pacientes = pacienteRepository.get();
+
+        if (pacientes != null && !pacientes.isEmpty()) {
+            for (Object paciente : pacientes) {
+                Object[] row = new Object[7];
+                row[0] = ((Paciente) paciente).getNombre();
+                row[1] = ((Paciente) paciente).getNombreDueno();
+                row[2] = ((Paciente) paciente).getEdad();
+                row[3] = ((Paciente) paciente).getSexo();
+                row[4] = ((Paciente) paciente).getFechaInscripcion();
+
+                model.addRow(row);
+            }
+        }
+
+        tblPacientes.setModel(model); // Establecer el modelo en la tabla
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -130,6 +159,6 @@ public class Pacientes extends javax.swing.JFrame {
     private javax.swing.JButton btnAgregar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblPacientes;
     // End of variables declaration//GEN-END:variables
 }

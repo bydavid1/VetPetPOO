@@ -2,7 +2,9 @@ package models;
 
 import interfaces.IModel;
 
-public class Paciente implements IModel {
+import java.io.Serializable;
+
+public class Paciente implements IModel, Serializable {
     private String id;
     private String nombre;
     private String nombreDueno;
@@ -18,6 +20,66 @@ public class Paciente implements IModel {
     private String idUnico;
     private String pelaje;
     private String fechaNacimiento;
+
+    public String getId() {
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getNombreDueno() {
+        return nombreDueno;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public int getIdCategoria() {
+        return idCategoria;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public int getIdRaza() {
+        return idRaza;
+    }
+
+    public Raza getRaza() {
+        return raza;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public String getFechaInscripcion() {
+        return fechaInscripcion;
+    }
+
+    public double getAltura() {
+        return altura;
+    }
+
+    public double getPeso() {
+        return peso;
+    }
+
+    public String getIdUnico() {
+        return idUnico;
+    }
+
+    public String getPelaje() {
+        return pelaje;
+    }
+
+    public String getFechaNacimiento() {
+        return fechaNacimiento;
+    }
 
     public void setId(String id) {
         this.id = id;
@@ -85,20 +147,5 @@ public class Paciente implements IModel {
         System.out.println("ID único: " + this.idUnico);
         System.out.println("Pelaje: " + this.pelaje);
         System.out.println("Fecha de nacimiento: " + this.fechaNacimiento);
-    }
-
-    public String generateUniqueId() {
-        String id = "";
-        String[] nombreSplit = this.nombre.split(" ");
-        String[] nombreDuenoSplit = this.nombreDueno.split(" ");
-        String[] fechaNacimientoSplit = this.fechaNacimiento.split("/");
-        String[] fechaInscripcionSplit = this.fechaInscripcion.split("/");
-        id += nombreSplit[0].charAt(0);
-        id += nombreDuenoSplit[0].charAt(0);
-        id += fechaNacimientoSplit[0];
-        id += fechaInscripcionSplit[0];
-        id += fechaInscripcionSplit[1];
-        id += fechaInscripcionSplit[2];
-        return id;
     }
 }
