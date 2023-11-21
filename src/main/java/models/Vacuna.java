@@ -1,8 +1,9 @@
 package models;
 
+import Helpers.Identifiable;
 import interfaces.IModel;
 
-public class Vacuna implements IModel {
+public class Vacuna extends Identifiable implements IModel {
     private int id;
     private String nombreVacuna;
 

@@ -1,5 +1,6 @@
 package repositories;
 
+import Helpers.Identifiable;
 import interfaces.IRepository;
 import models.Raza;
 
@@ -55,10 +56,12 @@ public class RazaRepository implements IRepository {
     }
 
     @Override
-    public void create(Object object) {
+    public void create(Identifiable object) {
         int newId = get().size();
         String filePath = directoryPath + "raza_" + newId + ".txt";
-        System.out.println(filePath);
+
+        object.setId(newId);
+
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(filePath))) {
             outputStream.writeObject(object);
             System.out.println("Raza guardado exitosamente");

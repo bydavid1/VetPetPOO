@@ -1,11 +1,11 @@
 package models;
 
+import Helpers.Identifiable;
 import interfaces.IModel;
 
 import java.io.Serializable;
 
-public class Paciente implements IModel, Serializable {
-    private String id;
+public class Paciente extends Identifiable implements IModel, Serializable {
     private String nombre;
     private String nombreDueno;
     private int edad;
@@ -20,10 +20,6 @@ public class Paciente implements IModel, Serializable {
     private String idUnico;
     private String pelaje;
     private String fechaNacimiento;
-
-    public String getId() {
-        return id;
-    }
 
     public String getNombre() {
         return nombre;
@@ -79,10 +75,6 @@ public class Paciente implements IModel, Serializable {
 
     public String getFechaNacimiento() {
         return fechaNacimiento;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public void setNombre(String nombre) {

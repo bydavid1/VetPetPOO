@@ -1,11 +1,12 @@
 package models;
 
+import Helpers.Identifiable;
 import interfaces.IModel;
 
 import java.io.Serializable;
 
-public class Raza implements IModel, Serializable {
-    private int id;
+public class Raza extends Identifiable implements IModel, Serializable {
+
     private String nombre;
 
     public Raza(String nombre) {

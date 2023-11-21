@@ -1,11 +1,11 @@
 package models;
 
+import Helpers.Identifiable;
 import interfaces.IModel;
 
 import java.util.List;
 
-public class Expediente implements IModel {
-    private int id;
+public class Expediente extends Identifiable implements IModel {
     private Paciente paciente;
     private Cita cita;
     private String diagnostico;

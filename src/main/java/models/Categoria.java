@@ -1,11 +1,11 @@
 package models;
 
+import Helpers.Identifiable;
 import interfaces.IModel;
 
 import java.io.Serializable;
 
-public class Categoria implements IModel, Serializable {
-    private int id;
+public class Categoria extends Identifiable implements IModel, Serializable {
     private String nombre;
 
     public Categoria(String nombre) {

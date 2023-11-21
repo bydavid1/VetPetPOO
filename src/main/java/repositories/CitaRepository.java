@@ -1,5 +1,6 @@
 package repositories;
 
+import Helpers.Identifiable;
 import interfaces.IRepository;
 import models.Cita;
 
@@ -58,9 +59,11 @@ public class CitaRepository implements IRepository {
     }
 
     @Override
-    public void create(Object object) {
+    public void create(Identifiable object) {
         int newId = get().size(); // Obtener el tamaño actual para generar el próximo ID
         String filePath = directoryPath + "cita_" + newId + ".txt";
+
+        object.setId(newId);
 
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(filePath))) {
             outputStream.writeObject(object);

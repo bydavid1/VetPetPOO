@@ -1,5 +1,6 @@
 package repositories;
 
+import Helpers.Identifiable;
 import interfaces.IRepository;
 import models.Expediente;
 
@@ -21,7 +22,7 @@ public class ExpedienteRepository implements IRepository {
     }
 
     @Override
-    public void create(Object object) {
+    public void create(Identifiable object) {
         expedientes.add((Expediente) object);
     }
 
