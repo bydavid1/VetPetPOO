@@ -4,6 +4,14 @@
  */
 package views.Paciente.Propiedades;
 
+import models.Categoria;
+import models.Raza;
+import repositories.CategoriaRepository;
+import repositories.RazaRepository;
+
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
+
 /**
  *
  * @author byronjimenez
@@ -27,7 +35,7 @@ public class CategoriasView extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblCategorias = new javax.swing.JTable();
         btnAddCategoria = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -36,20 +44,16 @@ public class CategoriasView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        loadDataTable();
+
+        jScrollPane1.setViewportView(tblCategorias);
 
         btnAddCategoria.setText("Agregar Categoria");
+        btnAddCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddCategoriaActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Nombre");
 
@@ -95,6 +99,38 @@ public class CategoriasView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAddCategoriaActionPerformed(java.awt.event.ActionEvent evt) {
+        CategoriaRepository categoriaRepository = new CategoriaRepository();
+        Categoria categoria = new Categoria(jTextField1.getText());
+        categoriaRepository.create(categoria);
+
+        // show success message
+        javax.swing.JOptionPane.showMessageDialog(this, "Registro guardado exitosamente");
+
+        jTextField1.setText("");
+
+        loadDataTable();
+    }
+
+    private void loadDataTable() {
+        CategoriaRepository categoriaRepository = new CategoriaRepository();
+        List<Object> categorias = categoriaRepository.get();
+
+        if (categorias != null && !categorias.isEmpty()) {
+            Object[][] data = new Object[categorias.size()][1];
+
+            for (int i = 0; i < categorias.size(); i++) {
+                Categoria categoria = (Categoria) categorias.get(i);
+                data[i][0] = categoria.getNombre();
+            }
+
+            String[] columnNames = {"Nombre"};
+
+            DefaultTableModel tableModel = new DefaultTableModel(data, columnNames);
+            tblCategorias.setModel(tableModel);
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -136,7 +172,7 @@ public class CategoriasView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tblCategorias;
     // End of variables declaration//GEN-END:variables
 }

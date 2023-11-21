@@ -4,6 +4,12 @@
  */
 package views.Paciente.Propiedades;
 
+import models.Raza;
+import repositories.RazaRepository;
+
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
+
 /**
  *
  * @author byronjimenez
@@ -28,31 +34,27 @@ public class RazasView extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        btnAddCategoria = new javax.swing.JButton();
+        tblRazas = new javax.swing.JTable();
+        btnAddRaza = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jTextField1 = new javax.swing.JTextField();
+        fNombre = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 18)); // NOI18N
         jLabel1.setText("Razas");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        loadDataTable();
 
-        btnAddCategoria.setText("Agregar Categoria");
+        jScrollPane1.setViewportView(tblRazas);
+
+        btnAddRaza.setText("Agregar Raza");
+        btnAddRaza.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddRazaActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Nombre");
 
@@ -67,9 +69,9 @@ public class RazasView extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1)
+                        .addComponent(fNombre)
                         .addGap(18, 18, 18)
-                        .addComponent(btnAddCategoria))
+                        .addComponent(btnAddRaza))
                     .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(37, Short.MAX_VALUE))
@@ -84,8 +86,8 @@ public class RazasView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(btnAddCategoria)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAddRaza)
+                    .addComponent(fNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
@@ -93,6 +95,36 @@ public class RazasView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void loadDataTable() {
+        RazaRepository razaRepository = new RazaRepository();
+        List<Object> razas = razaRepository.get();
+
+        if (razas != null && !razas.isEmpty()) {
+            Object[][] data = new Object[razas.size()][1];
+
+            for (int i = 0; i < razas.size(); i++) {
+                Raza raza = (Raza) razas.get(i);
+                data[i][0] = raza.getNombre();
+            }
+
+            String[] columnNames = {"Nombre"};
+
+            DefaultTableModel tableModel = new DefaultTableModel(data, columnNames);
+            tblRazas.setModel(tableModel);
+        }
+    }
+
+    private void btnAddRazaActionPerformed(java.awt.event.ActionEvent evt) {
+        RazaRepository razaRepository = new RazaRepository();
+        Raza raza = new Raza(fNombre.getText());
+        razaRepository.create(raza);
+        javax.swing.JOptionPane.showMessageDialog(this, "Raza guardado exitosamente");
+        loadDataTable();
+
+        // clear form
+        fNombre.setText("");
+    }
 
     /**
      * @param args the command line arguments
@@ -130,12 +162,12 @@ public class RazasView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddCategoria;
+    private javax.swing.JButton btnAddRaza;
+    private javax.swing.JTextField fNombre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tblRazas;
     // End of variables declaration//GEN-END:variables
 }

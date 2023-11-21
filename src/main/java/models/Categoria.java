@@ -2,7 +2,9 @@ package models;
 
 import interfaces.IModel;
 
-public class Categoria implements IModel {
+import java.io.Serializable;
+
+public class Categoria implements IModel, Serializable {
     private int id;
     private String nombre;
 

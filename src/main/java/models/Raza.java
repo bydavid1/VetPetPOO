@@ -2,7 +2,9 @@ package models;
 
 import interfaces.IModel;
 
-public class Raza implements IModel {
+import java.io.Serializable;
+
+public class Raza implements IModel, Serializable {
     private int id;
     private String nombre;
 
