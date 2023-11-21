@@ -45,8 +45,17 @@ public class RazasView extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 18)); // NOI18N
         jLabel1.setText("Razas");
 
-        loadDataTable();
-
+        tblRazas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
         jScrollPane1.setViewportView(tblRazas);
 
         btnAddRaza.setText("Agregar Raza");
