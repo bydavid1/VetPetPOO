@@ -22,7 +22,9 @@ public class PacienteRepository implements IRepository {
 
     @Override
     public void create(Object object) {
-        pacientes.add((Paciente) object);
+        Paciente paciente = (Paciente) object;
+        paciente.setId(paciente.generateUniqueId());
+        pacientes.add(paciente);
     }
 
     @Override
