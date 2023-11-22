@@ -2,36 +2,90 @@ package repositories;
 
 import interfaces.IRepository;
 import models.Vacuna;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class VacunaRepository implements IRepository<Vacuna> {
 
-    private List<Vacuna> vacunas = new ArrayList<>();
+    private final String directoryPath = "data/vacunas/";
+
+    public VacunaRepository() {
+        createDirectoryIfNotExists();
+    }
+
+    private void createDirectoryIfNotExists() {
+        File directory = new File(directoryPath);
+        if (!directory.exists()) {
+            directory.mkdirs(); // Crea el directorio si no existe
+        }
+    }
 
     @Override
     public List<Vacuna> get() {
-        return new ArrayList<Vacuna>(vacunas);
+        List<Vacuna> vacunas = new ArrayList<>();
+        File directory = new File(directoryPath);
+        File[] files = directory.listFiles();
+
+        if (files != null) {
+            for (File file : files) {
+                try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file))) {
+                    Vacuna vacuna = (Vacuna) inputStream.readObject();
+                    vacunas.add(vacuna);
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return vacunas;
     }
 
     @Override
     public Object getById(int id) {
-        return vacunas.get(id);
+        File file = new File(directoryPath + "vacuna_" + id + ".txt");
+        if (file.exists()) {
+            try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file))) {
+                return inputStream.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
     @Override
     public void create(Vacuna object) {
-        vacunas.add((Vacuna) object);
+        int newId = get().size(); // Obtener el tamaño actual para generar el próximo ID
+        String filePath = directoryPath + "vacuna_" + newId + ".txt";
+
+        object.setId(newId);
+
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(filePath))) {
+            outputStream.writeObject(object);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void update(Object object, int id) {
-        vacunas.set(id, (Vacuna) object);
+        String filePath = directoryPath + "vacuna_" + id + ".txt";
+        if (new File(filePath).exists()) {
+            try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(filePath))) {
+                outputStream.writeObject(object);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     public void delete(int id) {
-        vacunas.remove(id);
+        String filePath = directoryPath + "vacuna_" + id + ".txt";
+        File file = new File(filePath);
+        if (file.exists()) {
+            file.delete();
+        }
     }
 }
-
