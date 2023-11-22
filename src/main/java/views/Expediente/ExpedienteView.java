@@ -172,16 +172,18 @@ public class ExpedienteView extends javax.swing.JFrame {
         List<Expediente> expedientes = expedienteRepository.getExpedientesByPacienteId(idPaciente);
 
         if (expedientes != null && !expedientes.isEmpty()) {
-            Object[][] data = new Object[expedientes.size()][3];
+            Object[][] data = new Object[expedientes.size()][5];
 
             for (int i = 0; i < expedientes.size(); i++) {
                 Expediente expediente = expedientes.get(i);
                 data[i][0] = expediente.getDiagnostico();
                 data[i][1] = expediente.getMedicamentos();
                 data[i][2] = expediente.getVacunas();
+                data[i][3] = expediente.getPeso();
+                data[i][4] = expediente.getAltura();
             }
 
-            String[] columnNames = {"Diagnostico", "Medicamentos", "Vacunas"};
+            String[] columnNames = {"Diagnostico", "Medicamentos", "Vacunas", "Peso", "Altura"};
 
             jTable1.setModel(new javax.swing.table.DefaultTableModel(data, columnNames));
         }
@@ -191,8 +193,8 @@ public class ExpedienteView extends javax.swing.JFrame {
         lblNombre.setText("Nombre: " + paciente.getNombre());
         lblNombreDueno.setText("Nombre del dueño: " + paciente.getNombreDueno());
         lblEdad.setText("Edad: " + paciente.getEdad());
-        lblCategoria.setText("Categoria: " + String.valueOf(paciente.getIdCategoria()));
-        lblRaza.setText("Raza: " + String.valueOf(paciente.getIdRaza()));
+        lblCategoria.setText("Categoria: " + paciente.getIdCategoria());
+        lblRaza.setText("Raza: " + paciente.getIdRaza());
         lblSexo.setText("Sexo: " + paciente.getSexo());
         lblFechaInscripcion.setText("Fecha de inscripción: " + paciente.getFechaInscripcion());
         lblAltura.setText("Altura: " + paciente.getAltura());

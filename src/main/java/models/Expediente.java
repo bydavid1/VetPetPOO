@@ -6,14 +6,16 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Expediente implements IModel, Serializable {
+    private int id;
     private Paciente paciente;
     private int idPaciente;
     private Cita cita;
     private int idCita;
     private String diagnostico;
     private String medicamentos;
-    private String vacunas;
-    private int id;
+    private List<String> vacunas;
+    private double peso;
+    private double altura;
 
     public int getId() {
         return id;
@@ -71,12 +73,28 @@ public class Expediente implements IModel, Serializable {
         this.medicamentos = medicamentos;
     }
 
-    public String getVacunas() {
+    public List<String> getVacunas() {
         return vacunas;
     }
 
-    public void setVacunas(String vacunas) {
+    public void setVacunas(List<String> vacunas) {
         this.vacunas = vacunas;
+    }
+
+    public double getPeso() {
+        return peso;
+    }
+
+    public void setPeso(double peso) {
+        this.peso = peso;
+    }
+
+    public double getAltura() {
+        return altura;
+    }
+
+    public void setAltura(double altura) {
+        this.altura = altura;
     }
 
     @Override

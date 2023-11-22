@@ -6,6 +6,7 @@ package views.Expediente;
 
 import models.Expediente;
 import repositories.ExpedienteRepository;
+import repositories.VacunaRepository;
 
 import javax.swing.*;
 
@@ -22,6 +23,7 @@ public class AgregarExpediente extends javax.swing.JFrame {
      */
     public AgregarExpediente() {
         initComponents();
+        loadVacunas();
     }
 
     /**
@@ -39,12 +41,13 @@ public class AgregarExpediente extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         fMedicamentos = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        fVacunas = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         spPeso = new javax.swing.JSpinner();
         jLabel6 = new javax.swing.JLabel();
         spAltura = new javax.swing.JSpinner();
         btnGuardar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,8 +64,6 @@ public class AgregarExpediente extends javax.swing.JFrame {
 
         jLabel4.setText("Vacunas");
 
-        fVacunas.setName("fnombre"); // NOI18N
-
         jLabel5.setText("Peso");
 
         jLabel6.setText("Altura");
@@ -73,6 +74,13 @@ public class AgregarExpediente extends javax.swing.JFrame {
                 btnGuardarActionPerformed(evt);
             }
         });
+
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(jList1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -85,13 +93,13 @@ public class AgregarExpediente extends javax.swing.JFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel4)
                             .addComponent(jLabel2)
-                            .addComponent(fDiagnostico, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fDiagnostico, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
                             .addComponent(jLabel3)
-                            .addComponent(fMedicamentos, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fVacunas, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(fMedicamentos, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -106,16 +114,19 @@ public class AgregarExpediente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnGuardar)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(spPeso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(spAltura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(51, 51, 51))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnGuardar)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(spPeso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(spAltura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(51, 51, 51)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -129,8 +140,8 @@ public class AgregarExpediente extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(fVacunas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(42, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20))))
         );
 
         pack();
@@ -139,9 +150,9 @@ public class AgregarExpediente extends javax.swing.JFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
         expediente.setDiagnostico(fDiagnostico.getText());
         expediente.setMedicamentos(fMedicamentos.getText());
-        expediente.setVacunas(fVacunas.getText());
-        //expediente.setPeso((int) spPeso.getValue());
-        //expediente.setAltura((int) spAltura.getValue());
+        expediente.setPeso((int) spPeso.getValue());
+        expediente.setAltura((int) spAltura.getValue());
+        expediente.setVacunas(jList1.getSelectedValuesList());
         ExpedienteRepository expedienteRepository = new ExpedienteRepository();
         expedienteRepository.create(expediente);
 
@@ -154,7 +165,6 @@ public class AgregarExpediente extends javax.swing.JFrame {
     private void cleanForm() {
         fDiagnostico.setText("");
         fMedicamentos.setText("");
-        fVacunas.setText("");
         spPeso.setValue(0);
         spAltura.setValue(0);
     }
@@ -162,6 +172,17 @@ public class AgregarExpediente extends javax.swing.JFrame {
     public void configCita(int idPaciente, int idCita) {
         expediente.setIdPaciente(idPaciente);
         expediente.setIdCita(idCita);
+    }
+
+    // function to load vacunas into jList1
+    private void loadVacunas() {
+        VacunaRepository vacunaRepository = new VacunaRepository();
+        DefaultListModel<String> model = new DefaultListModel<>();
+        vacunaRepository.get().forEach(vacuna -> {
+            model.addElement(vacuna.getNombreVacuna());
+        });
+
+        jList1.setModel(model);
     }
 
     /**
@@ -203,16 +224,14 @@ public class AgregarExpediente extends javax.swing.JFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JTextField fDiagnostico;
     private javax.swing.JTextField fMedicamentos;
-    private javax.swing.JTextField fNombre;
-    private javax.swing.JTextField fNombre1;
-    private javax.swing.JTextField fNombre2;
-    private javax.swing.JTextField fVacunas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JList<String> jList1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner spAltura;
     private javax.swing.JSpinner spPeso;
     // End of variables declaration//GEN-END:variables
