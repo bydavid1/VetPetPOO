@@ -1,15 +1,23 @@
 package models;
 
-import Helpers.Identifiable;
 import interfaces.IModel;
 
 import java.io.Serializable;
 
-public class Categoria extends Identifiable implements IModel, Serializable {
+public class Categoria implements IModel, Serializable {
+    private int id;
     private String nombre;
 
     public Categoria(String nombre) {
         this.nombre = nombre;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombre() {

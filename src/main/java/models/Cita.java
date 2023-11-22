@@ -1,16 +1,23 @@
 package models;
 
-import Helpers.Identifiable;
 import interfaces.IModel;
 
 import java.io.Serializable;
 
-public class Cita extends Identifiable implements IModel, Serializable {
-
+public class Cita implements IModel, Serializable {
+    private int id;
     private String fecha;
     private String hora;
     private Paciente paciente;
+    private int idPaciente;
     private String motivo;
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getFecha() {
         return fecha;
@@ -34,6 +41,14 @@ public class Cita extends Identifiable implements IModel, Serializable {
 
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
+    }
+
+    public int getIdPaciente() {
+        return idPaciente;
+    }
+
+    public void setIdPaciente(int idPaciente) {
+        this.idPaciente = idPaciente;
     }
 
     public String getMotivo() {
