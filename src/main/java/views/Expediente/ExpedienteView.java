@@ -9,6 +9,7 @@ import models.Paciente;
 import repositories.ExpedienteRepository;
 import repositories.PacienteRepository;
 
+import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
 /**
@@ -50,7 +51,8 @@ public class ExpedienteView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 18)); // NOI18N
         jLabel1.setText("Expediente");
@@ -164,29 +166,25 @@ public class ExpedienteView extends javax.swing.JFrame {
         PacienteRepository pacienteRepository = new PacienteRepository();
         Paciente paciente = (Paciente) pacienteRepository.getById(idPaciente);
         setPacienteInfo(paciente);
-        loadExpedientes(idPaciente);
+
+        jTable1.setModel(loadDataTable(idPaciente));
     }
 
-    public void loadExpedientes(int idPaciente) {
+    public DefaultTableModel loadDataTable(int idPaciente) {
         ExpedienteRepository expedienteRepository = new ExpedienteRepository();
         List<Expediente> expedientes = expedienteRepository.getExpedientesByPacienteId(idPaciente);
 
+        String[] columnNames = {"Diagnostico", "Medicamentos", "Vacunas", "Peso", "Altura"};
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
         if (expedientes != null && !expedientes.isEmpty()) {
-            Object[][] data = new Object[expedientes.size()][5];
-
-            for (int i = 0; i < expedientes.size(); i++) {
-                Expediente expediente = expedientes.get(i);
-                data[i][0] = expediente.getDiagnostico();
-                data[i][1] = expediente.getMedicamentos();
-                data[i][2] = expediente.getVacunas();
-                data[i][3] = expediente.getPeso();
-                data[i][4] = expediente.getAltura();
+            for (Expediente expediente : expedientes) {
+                Object[] rowData = {expediente.getDiagnostico(), expediente.getMedicamentos(), expediente.getVacunas(), expediente.getPeso(), expediente.getAltura()};
+                model.addRow(rowData);
             }
-
-            String[] columnNames = {"Diagnostico", "Medicamentos", "Vacunas", "Peso", "Altura"};
-
-            jTable1.setModel(new javax.swing.table.DefaultTableModel(data, columnNames));
         }
+
+        return model;
     }
 
     private void setPacienteInfo(Paciente paciente) {

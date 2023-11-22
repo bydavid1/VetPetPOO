@@ -43,7 +43,9 @@ public class VacunasView extends javax.swing.JFrame {
         fNombre = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setLocation(new java.awt.Point(0, 0));
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 18)); // NOI18N
         jLabel1.setText("Vacunas");
@@ -106,8 +108,8 @@ public class VacunasView extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
@@ -130,7 +132,7 @@ public class VacunasView extends javax.swing.JFrame {
         cleanForm();
 
         tblVacunas.setModel(loadDataTable());
-    }//GEN-LAST:event_btnAgregarActionPerformed
+    }                                          
 
     private DefaultTableModel loadDataTable() {
         DefaultTableModel model = new DefaultTableModel();

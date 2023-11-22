@@ -26,7 +26,6 @@ public class AgregarPaciente extends javax.swing.JFrame {
      * Creates new form AgregarPaciente
      */
     public AgregarPaciente() {
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
     }
 
@@ -68,7 +67,8 @@ public class AgregarPaciente extends javax.swing.JFrame {
 
         jTextField5.setText("jTextField1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 18)); // NOI18N
         jLabel1.setText("Agregar paciente");

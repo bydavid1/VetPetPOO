@@ -23,7 +23,6 @@ public class CategoriasView extends javax.swing.JFrame {
      * Creates new form CategoriasView
      */
     public CategoriasView() {
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
     }
 
@@ -44,10 +43,10 @@ public class CategoriasView extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
-        loadDataTable();
-
+        tblCategorias.setModel(loadDataTable());
         jScrollPane1.setViewportView(tblCategorias);
 
         btnAddCategoria.setText("Agregar Categoria");
@@ -111,26 +110,26 @@ public class CategoriasView extends javax.swing.JFrame {
 
         jTextField1.setText("");
 
-        loadDataTable();
+        reloadDataTable();
     }
 
-    private void loadDataTable() {
+    private void reloadDataTable() {
+        tblCategorias.setModel(loadDataTable());
+    }
+
+    private DefaultTableModel loadDataTable() {
         CategoriaRepository categoriaRepository = new CategoriaRepository();
         List<Categoria> categorias = categoriaRepository.get();
 
-        if (categorias != null && !categorias.isEmpty()) {
-            Object[][] data = new Object[categorias.size()][1];
+        String[] columnNames = {"ID", "Nombre"};
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 
-            for (int i = 0; i < categorias.size(); i++) {
-                Categoria categoria = (Categoria) categorias.get(i);
-                data[i][0] = categoria.getNombre();
-            }
-
-            String[] columnNames = {"Nombre"};
-
-            DefaultTableModel tableModel = new DefaultTableModel(data, columnNames);
-            tblCategorias.setModel(tableModel);
+        for (Categoria categoria : categorias) {
+            Object[] rowData = {categoria.getId(), categoria.getNombre()};
+            model.addRow(rowData);
         }
+
+        return model;
     }
 
     /**

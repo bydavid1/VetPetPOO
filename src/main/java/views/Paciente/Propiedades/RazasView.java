@@ -21,7 +21,6 @@ public class RazasView extends javax.swing.JFrame {
      * Creates new form RazasView
      */
     public RazasView() {
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
     }
 
@@ -42,22 +41,13 @@ public class RazasView extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         fNombre = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 18)); // NOI18N
         jLabel1.setText("Razas");
 
-        tblRazas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        tblRazas.setModel(loadDataTable());
         jScrollPane1.setViewportView(tblRazas);
 
         btnAddRaza.setText("Agregar Raza");
@@ -107,23 +97,23 @@ public class RazasView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loadDataTable() {
+    private void reloadDataTable() {
+        tblRazas.setModel(loadDataTable());
+    }
+
+    private DefaultTableModel loadDataTable() {
         RazaRepository razaRepository = new RazaRepository();
         List<Raza> razas = razaRepository.get();
 
-        if (razas != null && !razas.isEmpty()) {
-            Object[][] data = new Object[razas.size()][1];
+        String[] columnNames = {"ID", "Nombre"};
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 
-            for (int i = 0; i < razas.size(); i++) {
-                Raza raza = razas.get(i);
-                data[i][0] = raza.getNombre();
-            }
-
-            String[] columnNames = {"Nombre"};
-
-            DefaultTableModel tableModel = new DefaultTableModel(data, columnNames);
-            tblRazas.setModel(tableModel);
+        for (Raza raza : razas) {
+            Object[] rowData = {raza.getId(), raza.getNombre()};
+            model.addRow(rowData);
         }
+
+        return model;
     }
 
     private void btnAddRazaActionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,7 +121,8 @@ public class RazasView extends javax.swing.JFrame {
         Raza raza = new Raza(fNombre.getText());
         razaRepository.create(raza);
         javax.swing.JOptionPane.showMessageDialog(this, "Raza guardado exitosamente");
-        loadDataTable();
+
+        reloadDataTable();
 
         // clear form
         fNombre.setText("");
