@@ -1,19 +1,18 @@
 package repositories;
 
-import Helpers.Identifiable;
 import interfaces.IRepository;
 import models.Expediente;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExpedienteRepository implements IRepository {
+public class ExpedienteRepository implements IRepository<Expediente> {
 
     private List<Expediente> expedientes = new ArrayList<>();
 
     @Override
-    public List<Object> get() {
-        return new ArrayList<>(expedientes);
+    public List<Expediente> get() {
+        return new ArrayList<Expediente>(expedientes);
     }
 
     @Override
@@ -22,7 +21,7 @@ public class ExpedienteRepository implements IRepository {
     }
 
     @Override
-    public void create(Identifiable object) {
+    public void create(Expediente object) {
         expedientes.add((Expediente) object);
     }
 

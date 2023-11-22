@@ -1,6 +1,5 @@
 package repositories;
 
-import Helpers.Identifiable;
 import interfaces.IRepository;
 import models.Paciente;
 
@@ -8,7 +7,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PacienteRepository implements IRepository {
+public class PacienteRepository implements IRepository<Paciente> {
 
     private final String directoryPath = "data/pacientes/";
 
@@ -24,15 +23,15 @@ public class PacienteRepository implements IRepository {
     }
 
     @Override
-    public List<Object> get() {
-        List<Object> pacientes = new ArrayList<>();
+    public List<Paciente> get() {
+        List<Paciente> pacientes = new ArrayList<>();
         File directory = new File(directoryPath);
         File[] files = directory.listFiles();
 
         if (files != null) {
             for (File file : files) {
                 try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file))) {
-                    Object paciente = inputStream.readObject();
+                    Paciente paciente = (Paciente) inputStream.readObject();
                     pacientes.add(paciente);
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
@@ -56,7 +55,7 @@ public class PacienteRepository implements IRepository {
     }
 
     @Override
-    public void create(Identifiable object) {
+    public void create(Paciente object) {
         int newId = get().size(); // Obtener el tamaño actual para generar el próximo ID
         String filePath = directoryPath + "paciente_" + newId + ".txt";
 

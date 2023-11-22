@@ -1,6 +1,5 @@
 package repositories;
 
-import Helpers.Identifiable;
 import interfaces.IRepository;
 import models.Cita;
 
@@ -8,10 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
-public class CitaRepository implements IRepository {
+public class CitaRepository implements IRepository<Cita> {
 
     private final String directoryPath = "data/citas/";
 
@@ -27,15 +24,15 @@ public class CitaRepository implements IRepository {
     }
 
     @Override
-    public List<Object> get() {
-        List<Object> citas = new ArrayList<>();
+    public List<Cita> get() {
+        List<Cita> citas = new ArrayList<>();
         File directory = new File(directoryPath);
         File[] files = directory.listFiles();
 
         if (files != null) {
             for (File file : files) {
                 try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file))) {
-                    Object cita = inputStream.readObject();
+                    Cita cita = (Cita) inputStream.readObject();
                     citas.add(cita);
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
@@ -59,7 +56,7 @@ public class CitaRepository implements IRepository {
     }
 
     @Override
-    public void create(Identifiable object) {
+    public void create(Cita object) {
         int newId = get().size(); // Obtener el tamaño actual para generar el próximo ID
         String filePath = directoryPath + "cita_" + newId + ".txt";
 

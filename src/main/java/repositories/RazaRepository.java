@@ -1,6 +1,5 @@
 package repositories;
 
-import Helpers.Identifiable;
 import interfaces.IRepository;
 import models.Raza;
 
@@ -8,7 +7,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RazaRepository implements IRepository {
+public class RazaRepository implements IRepository<Raza> {
 
     private final String directoryPath = "data/razas/";
     
@@ -24,15 +23,15 @@ public class RazaRepository implements IRepository {
     }
 
     @Override
-    public List<Object> get() {
-        List<Object> razas = new ArrayList<>();
+    public List<Raza> get() {
+        List<Raza> razas = new ArrayList<>();
         File directory = new File(directoryPath);
         File[] files = directory.listFiles();
 
         if (files != null) {
             for (File file : files) {
                 try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file))) {
-                    Object raza = inputStream.readObject();
+                    Raza raza = (Raza) inputStream.readObject();
                     razas.add(raza);
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
@@ -56,7 +55,7 @@ public class RazaRepository implements IRepository {
     }
 
     @Override
-    public void create(Identifiable object) {
+    public void create(Raza object) {
         int newId = get().size();
         String filePath = directoryPath + "raza_" + newId + ".txt";
 

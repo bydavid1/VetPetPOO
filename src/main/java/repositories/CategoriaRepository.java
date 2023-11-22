@@ -1,6 +1,5 @@
 package repositories;
 
-import Helpers.Identifiable;
 import interfaces.IRepository;
 import models.Categoria;
 
@@ -8,7 +7,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoriaRepository implements IRepository {
+public class CategoriaRepository implements IRepository<Categoria> {
     private final String directoryPath = "data/categorias/";
 
     public CategoriaRepository() {
@@ -23,15 +22,15 @@ public class CategoriaRepository implements IRepository {
     }
 
     @Override
-    public List<Object> get() {
-        List<Object> categorias = new ArrayList<>();
+    public List<Categoria> get() {
+        List<Categoria> categorias = new ArrayList<>();
         File directory = new File(directoryPath);
         File[] files = directory.listFiles();
 
         if (files != null) {
             for (File file : files) {
                 try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file))) {
-                    Object categoria = inputStream.readObject();
+                    Categoria categoria = (Categoria) inputStream.readObject();
                     categorias.add(categoria);
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
@@ -55,7 +54,7 @@ public class CategoriaRepository implements IRepository {
     }
 
     @Override
-    public void create(Identifiable object) {
+    public void create(Categoria object) {
         int newId = get().size(); // Obtener el tamaño actual para generar el próximo ID
         String filePath = directoryPath + "categoria_" + newId + ".txt";
 

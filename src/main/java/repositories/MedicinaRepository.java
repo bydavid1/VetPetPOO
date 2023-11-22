@@ -1,19 +1,18 @@
 package repositories;
 
-import Helpers.Identifiable;
 import interfaces.IRepository;
 import models.Medicina;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MedicinaRepository implements IRepository {
+public class MedicinaRepository implements IRepository<Medicina> {
 
     private List<Medicina> medicinas = new ArrayList<>();
 
     @Override
-    public List<Object> get() {
-        return new ArrayList<>(medicinas);
+    public List<Medicina> get() {
+        return new ArrayList<Medicina>(medicinas);
     }
 
     @Override
@@ -22,7 +21,7 @@ public class MedicinaRepository implements IRepository {
     }
 
     @Override
-    public void create(Identifiable object) {
+    public void create(Medicina object) {
         medicinas.add((Medicina) object);
     }
 
