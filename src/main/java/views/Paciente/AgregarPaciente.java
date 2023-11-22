@@ -112,6 +112,7 @@ public class AgregarPaciente extends javax.swing.JFrame {
 
         jLabel12.setText("Fecha de Nacimiento");
 
+        fFechaNacimiento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("d/M/yy"))));
         fFechaNacimiento.setName("fFechaNacimiento"); // NOI18N
 
         btnGuardar.setText("Guardar");

@@ -11,6 +11,7 @@ import repositories.CategoriaRepository;
 import repositories.PacienteRepository;
 import repositories.RazaRepository;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
@@ -47,6 +48,12 @@ public class PacientesView extends javax.swing.JFrame {
         jLabel1.setText("Pacientes");
 
         tblPacientes.setModel(loadDataTable());
+        tblPacientes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblPacientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblPacientesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblPacientes);
 
         btnAgregar.setText("Agregar Paciente");
@@ -63,13 +70,12 @@ public class PacientesView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(210, 210, 210)
-                        .addComponent(btnAgregar)
-                        .addGap(0, 76, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(btnAgregar)))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -79,12 +85,20 @@ public class PacientesView extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(btnAgregar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tblPacientesMouseClicked(java.awt.event.MouseEvent evt) {
+        int selectedRow = tblPacientes.getSelectedRow();
+        int id = (int) tblPacientes.getValueAt(selectedRow, 0);
+        String name = (String) tblPacientes.getValueAt(selectedRow, 1);
+
+        JOptionPane.showMessageDialog(null, "ID: " + id + "\nName: " + name);
+    }
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {
         // Show AgregarPaciente view
@@ -94,6 +108,7 @@ public class PacientesView extends javax.swing.JFrame {
 
     private DefaultTableModel loadDataTable() {
         DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID");
         model.addColumn("Nombre");
         model.addColumn("Dueño");
         model.addColumn("Edad");
@@ -102,20 +117,20 @@ public class PacientesView extends javax.swing.JFrame {
         model.addColumn("Categoria");
         model.addColumn("Raza");
 
-        // Obtener los datos de los pacientes desde el repositorio (ejemplo)
         PacienteRepository pacienteRepository = new PacienteRepository();
         List<Paciente> pacientes = pacienteRepository.get();
 
         if (pacientes != null && !pacientes.isEmpty()) {
             for (Paciente paciente : pacientes) {
-                Object[] row = new Object[7];
-                row[0] = paciente.getNombre();
-                row[1] = paciente.getNombreDueno();
-                row[2] = paciente.getEdad();
-                row[3] = paciente.getSexo();
-                row[4] = paciente.getFechaInscripcion();
-                row[5] = paciente.getIdCategoria();
-                row[6] = paciente.getIdRaza();
+                Object[] row = new Object[8];
+                row[0] = paciente.getId();
+                row[1] = paciente.getNombre();
+                row[2] = paciente.getNombreDueno();
+                row[3] = paciente.getEdad();
+                row[4] = paciente.getSexo();
+                row[5] = paciente.getFechaInscripcion();
+                row[6] = paciente.getIdCategoria();
+                row[7] = paciente.getIdRaza();
 
                 model.addRow(row);
             }
