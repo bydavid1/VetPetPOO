@@ -7,6 +7,7 @@ package views.Paciente.Propiedades;
 import models.Raza;
 import repositories.RazaRepository;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class RazasView extends javax.swing.JFrame {
      * Creates new form RazasView
      */
     public RazasView() {
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
     }
 

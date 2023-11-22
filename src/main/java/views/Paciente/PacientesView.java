@@ -10,6 +10,7 @@ import models.Raza;
 import repositories.CategoriaRepository;
 import repositories.PacienteRepository;
 import repositories.RazaRepository;
+import views.Expediente.ExpedienteView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -25,6 +26,7 @@ public class PacientesView extends javax.swing.JFrame {
      * Creates new form Pacientes
      */
     public PacientesView() {
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
     }
 
@@ -95,9 +97,10 @@ public class PacientesView extends javax.swing.JFrame {
     private void tblPacientesMouseClicked(java.awt.event.MouseEvent evt) {
         int selectedRow = tblPacientes.getSelectedRow();
         int id = (int) tblPacientes.getValueAt(selectedRow, 0);
-        String name = (String) tblPacientes.getValueAt(selectedRow, 1);
 
-        JOptionPane.showMessageDialog(null, "ID: " + id + "\nName: " + name);
+        ExpedienteView expedienteView = new ExpedienteView();
+        expedienteView.configPaciente(id);
+        expedienteView.setVisible(true);
     }
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {

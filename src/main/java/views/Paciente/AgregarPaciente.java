@@ -26,6 +26,7 @@ public class AgregarPaciente extends javax.swing.JFrame {
      * Creates new form AgregarPaciente
      */
     public AgregarPaciente() {
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
     }
 

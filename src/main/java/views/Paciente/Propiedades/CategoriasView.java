@@ -9,6 +9,7 @@ import models.Raza;
 import repositories.CategoriaRepository;
 import repositories.RazaRepository;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class CategoriasView extends javax.swing.JFrame {
      * Creates new form CategoriasView
      */
     public CategoriasView() {
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
     }
 

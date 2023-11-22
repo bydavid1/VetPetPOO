@@ -24,6 +24,7 @@ public class CitasView extends javax.swing.JFrame {
      * Creates new form Citas
      */
     public CitasView() {
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
     }
 
