@@ -126,6 +126,9 @@
               <Connection code="llenarCitasTable()" type="code"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblCitasMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

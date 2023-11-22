@@ -2,9 +2,10 @@ package models;
 
 import interfaces.IModel;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Expediente implements IModel {
+public class Expediente implements IModel, Serializable {
     private Paciente paciente;
     private int idPaciente;
     private Cita cita;

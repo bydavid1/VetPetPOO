@@ -8,6 +8,7 @@ import models.Cita;
 import models.Paciente;
 import repositories.CitaRepository;
 import repositories.PacienteRepository;
+import views.Expediente.AgregarExpediente;
 import views.Paciente.AgregarPaciente;
 
 import javax.swing.*;
@@ -66,6 +67,11 @@ public class CitasView extends javax.swing.JFrame {
         jLabel1.setText("Citas");
 
         tblCitas.setModel(llenarCitasTable());
+        tblCitas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCitasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblCitas);
 
         jLabel3.setText("Hora");
@@ -140,6 +146,15 @@ public class CitasView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tblCitasMouseClicked(java.awt.event.MouseEvent evt) {
+        int selectedRow = tblCitas.getSelectedRow();
+        //int id = (int) tblCitas.getValueAt(selectedRow, 2);
+
+        AgregarExpediente agregarExpediente = new AgregarExpediente();
+        agregarExpediente.configCita(1, 1);
+        agregarExpediente.setVisible(true);
+    }
 
     private void btnRegistrarPacienteActionPerformed(java.awt.event.ActionEvent evt) {
         AgregarPaciente agregarPaciente = new AgregarPaciente();
