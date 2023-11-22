@@ -102,16 +102,16 @@ public class Pacientes extends javax.swing.JFrame {
 
         // Obtener los datos de los pacientes desde el repositorio (ejemplo)
         PacienteRepository pacienteRepository = new PacienteRepository();
-        List<Object> pacientes = pacienteRepository.get();
+        List<Paciente> pacientes = pacienteRepository.get();
 
         if (pacientes != null && !pacientes.isEmpty()) {
-            for (Object paciente : pacientes) {
+            for (Paciente paciente : pacientes) {
                 Object[] row = new Object[7];
-                row[0] = ((Paciente) paciente).getNombre();
-                row[1] = ((Paciente) paciente).getNombreDueno();
-                row[2] = ((Paciente) paciente).getEdad();
-                row[3] = ((Paciente) paciente).getSexo();
-                row[4] = ((Paciente) paciente).getFechaInscripcion();
+                row[0] = paciente.getNombre();
+                row[1] = paciente.getNombreDueno();
+                row[2] = paciente.getEdad();
+                row[3] = paciente.getSexo();
+                row[4] = paciente.getFechaInscripcion();
 
                 model.addRow(row);
             }

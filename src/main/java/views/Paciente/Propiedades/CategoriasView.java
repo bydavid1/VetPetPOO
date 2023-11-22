@@ -114,7 +114,7 @@ public class CategoriasView extends javax.swing.JFrame {
 
     private void loadDataTable() {
         CategoriaRepository categoriaRepository = new CategoriaRepository();
-        List<Object> categorias = categoriaRepository.get();
+        List<Categoria> categorias = categoriaRepository.get();
 
         if (categorias != null && !categorias.isEmpty()) {
             Object[][] data = new Object[categorias.size()][1];

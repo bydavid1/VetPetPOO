@@ -107,13 +107,13 @@ public class RazasView extends javax.swing.JFrame {
 
     private void loadDataTable() {
         RazaRepository razaRepository = new RazaRepository();
-        List<Object> razas = razaRepository.get();
+        List<Raza> razas = razaRepository.get();
 
         if (razas != null && !razas.isEmpty()) {
             Object[][] data = new Object[razas.size()][1];
 
             for (int i = 0; i < razas.size(); i++) {
-                Raza raza = (Raza) razas.get(i);
+                Raza raza = razas.get(i);
                 data[i][0] = raza.getNombre();
             }
 

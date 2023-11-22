@@ -48,7 +48,7 @@ public class CitasView extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
         cbPaciente = new javax.swing.JComboBox<>();
-        btnAgendatCita = new javax.swing.JButton();
+        btnAgendarCita = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,10 +73,10 @@ public class CitasView extends javax.swing.JFrame {
 
         cbPaciente.setModel(llenarPacientesComboBox());
 
-        btnAgendatCita.setText("Agendar Cita");
-        btnAgendatCita.addActionListener(new java.awt.event.ActionListener() {
+        btnAgendarCita.setText("Agendar Cita");
+        btnAgendarCita.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgendatCitaActionPerformed(evt);
+                btnAgendarCitaActionPerformed(evt);
             }
         });
 
@@ -105,7 +105,7 @@ public class CitasView extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addGap(18, 18, 18)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(btnAgendatCita, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                                .addComponent(btnAgendarCita, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
                                 .addComponent(cbPaciente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGap(18, 18, 18)
                             .addComponent(btnRegistrarPaciente))))
@@ -129,7 +129,7 @@ public class CitasView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(btnAgendatCita))
+                    .addComponent(btnAgendarCita))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
@@ -153,12 +153,18 @@ public class CitasView extends javax.swing.JFrame {
         agregarPaciente.setVisible(true);
     }
 
-    private void btnAgendatCitaActionPerformed(java.awt.event.ActionEvent evt) {
+    private void btnAgendarCitaActionPerformed(java.awt.event.ActionEvent evt) {
         CitaRepository citaRepository = new CitaRepository();
 
         Cita cita = new Cita();
         cita.setFecha(fFecha.getText());
         cita.setHora(fHora.getText());
+        Paciente selectedItem = (Paciente) cbPaciente.getSelectedItem();
+        System.out.println(selectedItem);
+        int id = selectedItem.getId();
+        cita.setIdPaciente(id);
+
+        System.out.println(id);
 
         citaRepository.create(cita);
 
@@ -172,27 +178,31 @@ public class CitasView extends javax.swing.JFrame {
 
     private DefaultComboBoxModel llenarPacientesComboBox() {
         PacienteRepository pacienteRepository = new PacienteRepository();
-        List<Object> pacientes = pacienteRepository.get();
-        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        List<Paciente> pacientes = pacienteRepository.get();
 
-        for (Object paciente : pacientes) {
-            model.addElement(((Paciente) paciente).getNombre());
+        for (Paciente paciente : pacientes) {
+            System.out.println(paciente.getId());
+            System.out.println(paciente.getNombre());
         }
+
+        DefaultComboBoxModel<Paciente> model = new DefaultComboBoxModel<>(pacientes.toArray(new Paciente[0]));
 
         return model;
     }
 
     private DefaultTableModel llenarCitasTable() {
         CitaRepository citaRepository = new CitaRepository();
-        List<Object> citas = citaRepository.get();
-        Object[][] data = new Object[citas.size()][2];
+        List<Cita> citas = citaRepository.get();
+        Object[][] data = new Object[citas.size()][3];
 
-        for ( Object cita : citas) {
-            data[0][0] = ((Cita) cita).getFecha();
-            data[0][1] = ((Cita) cita).getHora();
+        for (int i = 0; i < citas.size(); i++) {
+            Cita cita = citas.get(i);
+            data[i][0] = cita.getFecha();
+            data[i][1] = cita.getHora();
+            data[i][2] = cita.getIdPaciente();
         }
 
-        String[] columnNames = {"Fecha", "Hora"};
+        String[] columnNames = {"Fecha", "Hora", "Paciente"};
 
         DefaultTableModel model = new DefaultTableModel(data, columnNames);
 
@@ -236,7 +246,7 @@ public class CitasView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgendatCita;
+    private javax.swing.JButton btnAgendarCita;
     private javax.swing.JButton btnRegistrarPaciente;
     private javax.swing.JComboBox<String> cbPaciente;
     private javax.swing.JFormattedTextField fFecha;

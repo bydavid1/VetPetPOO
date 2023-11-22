@@ -264,7 +264,7 @@ public class AgregarPaciente extends javax.swing.JFrame {
 
     private DefaultComboBoxModel llenarComboBoxCategorias() {
         CategoriaRepository categoriaRepository = new CategoriaRepository();
-        List<Object> categorias = categoriaRepository.get();
+        List<Categoria> categorias = categoriaRepository.get();
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
 
         for (Object categoria : categorias) {
@@ -277,7 +277,7 @@ public class AgregarPaciente extends javax.swing.JFrame {
 
     private DefaultComboBoxModel llenarComboBoxRazas() {
         RazaRepository razaRepository = new RazaRepository();
-        List<Object> razas = razaRepository.get();
+        List<Raza> razas = razaRepository.get();
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
 
         for (Object raza : razas) {
