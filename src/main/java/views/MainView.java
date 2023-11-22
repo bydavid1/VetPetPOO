@@ -4,7 +4,7 @@
  */
 package views;
 
-import views.Paciente.Pacientes;
+import views.Paciente.PacientesView;
 import views.Paciente.Propiedades.CategoriasView;
 import views.Paciente.Propiedades.RazasView;
 
@@ -139,7 +139,7 @@ public class MainView extends JFrame {
     }
 
     private void btnPacientesActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        Pacientes pacientes = new Pacientes();
+        PacientesView pacientes = new PacientesView();
         pacientes.setVisible(true);
     }
 

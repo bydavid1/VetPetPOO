@@ -18,12 +18,12 @@ import java.util.List;
  *
  * @author byronjimenez
  */
-public class Pacientes extends javax.swing.JFrame {
+public class PacientesView extends javax.swing.JFrame {
 
     /**
      * Creates new form Pacientes
      */
-    public Pacientes() {
+    public PacientesView() {
         initComponents();
     }
 
@@ -46,8 +46,7 @@ public class Pacientes extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 18)); // NOI18N
         jLabel1.setText("Pacientes");
 
-        loadDataTable();
-
+        tblPacientes.setModel(loadDataTable());
         jScrollPane1.setViewportView(tblPacientes);
 
         btnAgregar.setText("Agregar Paciente");
@@ -63,13 +62,14 @@ public class Pacientes extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAgregar))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(26, Short.MAX_VALUE))
+                        .addGap(210, 210, 210)
+                        .addComponent(btnAgregar)
+                        .addGap(0, 76, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -79,8 +79,8 @@ public class Pacientes extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(btnAgregar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
@@ -92,13 +92,15 @@ public class Pacientes extends javax.swing.JFrame {
         agregarPaciente.setVisible(true);
     }
 
-    private void loadDataTable() {
+    private DefaultTableModel loadDataTable() {
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Nombre");
         model.addColumn("Dueño");
         model.addColumn("Edad");
         model.addColumn("Sexo");
         model.addColumn("Fecha Inscripción");
+        model.addColumn("Categoria");
+        model.addColumn("Raza");
 
         // Obtener los datos de los pacientes desde el repositorio (ejemplo)
         PacienteRepository pacienteRepository = new PacienteRepository();
@@ -112,12 +114,14 @@ public class Pacientes extends javax.swing.JFrame {
                 row[2] = paciente.getEdad();
                 row[3] = paciente.getSexo();
                 row[4] = paciente.getFechaInscripcion();
+                row[5] = paciente.getIdCategoria();
+                row[6] = paciente.getIdRaza();
 
                 model.addRow(row);
             }
         }
 
-        tblPacientes.setModel(model); // Establecer el modelo en la tabla
+        return model;
     }
 
     /**
@@ -137,20 +141,21 @@ public class Pacientes extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Pacientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PacientesView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Pacientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PacientesView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Pacientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PacientesView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Pacientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PacientesView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Pacientes().setVisible(true);
+                new PacientesView().setVisible(true);
             }
         });
     }

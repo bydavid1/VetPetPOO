@@ -28,4 +28,8 @@ public class Categoria implements IModel, Serializable {
     public void show() {
         System.out.println("Nombre: " + this.nombre);
     }
+
+    public String toString() {
+        return this.nombre;
+    }
 }

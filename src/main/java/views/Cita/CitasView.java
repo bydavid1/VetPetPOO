@@ -159,32 +159,19 @@ public class CitasView extends javax.swing.JFrame {
         Cita cita = new Cita();
         cita.setFecha(fFecha.getText());
         cita.setHora(fHora.getText());
-        Paciente selectedItem = (Paciente) cbPaciente.getSelectedItem();
-        System.out.println(selectedItem);
-        int id = selectedItem.getId();
-        cita.setIdPaciente(id);
-
-        System.out.println(id);
-
+        cita.setIdPaciente(((Paciente) cbPaciente.getSelectedItem()).getId());
         citaRepository.create(cita);
-
-        JOptionPane.showMessageDialog(null, "Cita agendada");
 
         fFecha.setText("");
         fHora.setText("");
 
         tblCitas.setModel(llenarCitasTable());
+        JOptionPane.showMessageDialog(null, "Cita agendada");
     }
 
     private DefaultComboBoxModel llenarPacientesComboBox() {
         PacienteRepository pacienteRepository = new PacienteRepository();
         List<Paciente> pacientes = pacienteRepository.get();
-
-        for (Paciente paciente : pacientes) {
-            System.out.println(paciente.getId());
-            System.out.println(paciente.getNombre());
-        }
-
         DefaultComboBoxModel<Paciente> model = new DefaultComboBoxModel<>(pacientes.toArray(new Paciente[0]));
 
         return model;
