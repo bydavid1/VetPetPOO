@@ -4,8 +4,12 @@
  */
 package views.Expediente;
 
+import models.Expediente;
 import models.Paciente;
+import repositories.ExpedienteRepository;
 import repositories.PacienteRepository;
+
+import java.util.List;
 
 /**
  *
@@ -160,6 +164,27 @@ public class ExpedienteView extends javax.swing.JFrame {
         PacienteRepository pacienteRepository = new PacienteRepository();
         Paciente paciente = (Paciente) pacienteRepository.getById(idPaciente);
         setPacienteInfo(paciente);
+        loadExpedientes(idPaciente);
+    }
+
+    public void loadExpedientes(int idPaciente) {
+        ExpedienteRepository expedienteRepository = new ExpedienteRepository();
+        List<Expediente> expedientes = expedienteRepository.getExpedientesByPacienteId(idPaciente);
+
+        if (expedientes != null && !expedientes.isEmpty()) {
+            Object[][] data = new Object[expedientes.size()][3];
+
+            for (int i = 0; i < expedientes.size(); i++) {
+                Expediente expediente = expedientes.get(i);
+                data[i][0] = expediente.getDiagnostico();
+                data[i][1] = expediente.getMedicamentos();
+                data[i][2] = expediente.getVacunas();
+            }
+
+            String[] columnNames = {"Diagnostico", "Medicamentos", "Vacunas"};
+
+            jTable1.setModel(new javax.swing.table.DefaultTableModel(data, columnNames));
+        }
     }
 
     private void setPacienteInfo(Paciente paciente) {
