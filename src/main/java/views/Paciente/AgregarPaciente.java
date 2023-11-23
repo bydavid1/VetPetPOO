@@ -230,6 +230,9 @@ public class AgregarPaciente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
+        if (!validateForm()) {
+            return;
+        }
         // Create Paciente object
         Paciente paciente = new Paciente();
         paciente.setNombre(fNombre.getText());
@@ -249,6 +252,35 @@ public class AgregarPaciente extends javax.swing.JFrame {
         javax.swing.JOptionPane.showMessageDialog(this, "Paciente guardado exitosamente");
 
         clearForm();
+    }
+
+    private Boolean validateForm() {
+        if (fNombre.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo nombre es requerido");
+            return false;
+        }
+
+        if (fDueno.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo dueno es requerido");
+            return false;
+        }
+
+        if (fSexo.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo sexo es requerido");
+            return false;
+        }
+
+        if (fPelaJE.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo pelaje es requerido");
+            return false;
+        }
+
+        if (fFechaNacimiento.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo fecha de nacimiento es requerido");
+            return false;
+        }
+
+        return true;
     }
 
     private void clearForm() {

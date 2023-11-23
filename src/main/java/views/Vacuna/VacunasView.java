@@ -9,6 +9,7 @@ import models.Vacuna;
 import repositories.PacienteRepository;
 import repositories.VacunaRepository;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
@@ -120,6 +121,10 @@ public class VacunasView extends javax.swing.JFrame {
     }//GEN-LAST:event_tblVacunasMouseClicked
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {
+        if (!validateForm()) {
+            return;
+        }
+
         String nombre = fNombre.getText();
 
         VacunaRepository vacunaRepository = new VacunaRepository();
@@ -153,6 +158,15 @@ public class VacunasView extends javax.swing.JFrame {
         }
 
         return model;
+    }
+
+    private Boolean validateForm() {
+        if (fNombre.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo nombre es requerido");
+            return false;
+        }
+
+        return true;
     }
 
     private void cleanForm() {

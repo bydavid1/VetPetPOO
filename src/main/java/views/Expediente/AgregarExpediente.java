@@ -147,6 +147,10 @@ public class AgregarExpediente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
+        if (!validateForm()) {
+            return;
+        }
+
         expediente.setDiagnostico(fDiagnostico.getText());
         expediente.setMedicamentos(fMedicamentos.getText());
         expediente.setPeso((int) spPeso.getValue());
@@ -159,6 +163,30 @@ public class AgregarExpediente extends javax.swing.JFrame {
         cleanForm();
 
         javax.swing.JOptionPane.showMessageDialog(this, "Guardado exitosamente");
+    }
+
+    private Boolean validateForm() {
+        if (fDiagnostico.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo diagnostico es requerido");
+            return false;
+        }
+
+        if (fMedicamentos.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo medicamentos es requerido");
+            return false;
+        }
+
+        if ((int) spPeso.getValue() == 0) {
+            JOptionPane.showMessageDialog(this, "El campo peso es requerido");
+            return false;
+        }
+
+        if ((int) spAltura.getValue() == 0) {
+            JOptionPane.showMessageDialog(this, "El campo altura es requerido");
+            return false;
+        }
+
+        return true;
     }
 
     private void cleanForm() {

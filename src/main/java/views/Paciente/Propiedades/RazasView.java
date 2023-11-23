@@ -117,14 +117,24 @@ public class RazasView extends javax.swing.JFrame {
     }
 
     private void btnAddRazaActionPerformed(java.awt.event.ActionEvent evt) {
+        if (!validateForm()) {
+            return;
+        }
+
         RazaRepository razaRepository = new RazaRepository();
         Raza raza = new Raza(fNombre.getText());
         razaRepository.create(raza);
         javax.swing.JOptionPane.showMessageDialog(this, "Raza guardado exitosamente");
 
         reloadDataTable();
+        clearForm();
+    }
 
-        // clear form
+    public Boolean validateForm() {
+        return !fNombre.toString().isEmpty();
+    }
+
+    public void clearForm() {
         fNombre.setText("");
     }
 

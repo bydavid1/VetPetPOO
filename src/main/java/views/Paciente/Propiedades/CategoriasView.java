@@ -101,16 +101,32 @@ public class CategoriasView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddCategoriaActionPerformed(java.awt.event.ActionEvent evt) {
+        if (!validateForm()) {
+            return;
+        }
+
         CategoriaRepository categoriaRepository = new CategoriaRepository();
         Categoria categoria = new Categoria(jTextField1.getText());
         categoriaRepository.create(categoria);
 
         // show success message
-        javax.swing.JOptionPane.showMessageDialog(this, "Registro guardado exitosamente");
+        JOptionPane.showMessageDialog(this, "Registro guardado exitosamente");
 
-        jTextField1.setText("");
-
+        clearForm();
         reloadDataTable();
+    }
+
+    private Boolean validateForm() {
+        if (jTextField1.getText().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El campo nombre es requerido");
+            return false;
+        }
+
+        return true;
+    }
+
+    private void clearForm() {
+        jTextField1.setText("");
     }
 
     private void reloadDataTable() {
