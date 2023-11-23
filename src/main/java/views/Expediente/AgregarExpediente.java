@@ -162,7 +162,7 @@ public class AgregarExpediente extends javax.swing.JFrame {
         // clean form
         cleanForm();
 
-        javax.swing.JOptionPane.showMessageDialog(this, "Guardado exitosamente");
+        JOptionPane.showMessageDialog(this, "Guardado en el expediente, para verlo ir a la seccion de pacientes");
     }
 
     private Boolean validateForm() {

@@ -14,6 +14,7 @@ import views.Paciente.AgregarPaciente;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -156,10 +157,11 @@ public class CitasView extends javax.swing.JFrame {
 
     private void tblCitasMouseClicked(java.awt.event.MouseEvent evt) {
         int selectedRow = tblCitas.getSelectedRow();
-        //int id = (int) tblCitas.getValueAt(selectedRow, 2);
+        int idCita = (int) tblCitas.getValueAt(selectedRow, 0);
+        int idPaciente = (int) tblCitas.getValueAt(selectedRow, 3);
 
         AgregarExpediente agregarExpediente = new AgregarExpediente();
-        agregarExpediente.configCita(1, 1);
+        agregarExpediente.configCita(idCita, idPaciente);
         agregarExpediente.setVisible(true);
     }
 
@@ -177,16 +179,19 @@ public class CitasView extends javax.swing.JFrame {
     }
 
     private void btnAgendarCitaActionPerformed(java.awt.event.ActionEvent evt) {
+        if (!validateForm()) {
+            return;
+        }
+
         CitaRepository citaRepository = new CitaRepository();
 
         Cita cita = new Cita();
         cita.setFecha(fFecha.getText());
         cita.setHora(fHora.getText());
-        cita.setIdPaciente(((Paciente) cbPaciente.getSelectedItem()).getId());
+        cita.setIdPaciente(((Paciente) Objects.requireNonNull(cbPaciente.getSelectedItem())).getId());
         citaRepository.create(cita);
 
-        fFecha.setText("");
-        fHora.setText("");
+        clearForm();
 
         tblCitas.setModel(llenarCitasTable());
         JOptionPane.showMessageDialog(null, "Cita agendada");
@@ -203,20 +208,40 @@ public class CitasView extends javax.swing.JFrame {
     private DefaultTableModel llenarCitasTable() {
         CitaRepository citaRepository = new CitaRepository();
         List<Cita> citas = citaRepository.get();
-        Object[][] data = new Object[citas.size()][3];
+        Object[][] data = new Object[citas.size()][4];
 
         for (int i = 0; i < citas.size(); i++) {
             Cita cita = citas.get(i);
-            data[i][0] = cita.getFecha();
-            data[i][1] = cita.getHora();
-            data[i][2] = cita.getIdPaciente();
+            data[i][0] = cita.getId();
+            data[i][1] = cita.getFecha();
+            data[i][2] = cita.getHora();
+            data[i][3] = cita.getIdPaciente();
         }
 
-        String[] columnNames = {"Fecha", "Hora", "Paciente"};
+        String[] columnNames = {"Cod cita", "Fecha", "Hora", "Cod paciente"};
 
         DefaultTableModel model = new DefaultTableModel(data, columnNames);
 
         return model;
+    }
+
+    private Boolean validateForm() {
+        if (fFecha.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo fecha es requerido");
+            return false;
+        }
+
+        if (fHora.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo hora es requerido");
+            return false;
+        }
+
+        return true;
+    }
+
+    private void clearForm() {
+        fFecha.setText("");
+        fHora.setText("");
     }
 
     /**

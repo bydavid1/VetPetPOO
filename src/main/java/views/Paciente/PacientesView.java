@@ -112,6 +112,14 @@ public class PacientesView extends javax.swing.JFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {
         // Show AgregarPaciente view
         AgregarPaciente agregarPaciente = new AgregarPaciente();
+
+        agregarPaciente.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                tblPacientes.setModel(loadDataTable());
+            }
+        });
+
         agregarPaciente.setVisible(true);
     }
 

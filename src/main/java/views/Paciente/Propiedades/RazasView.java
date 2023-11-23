@@ -124,14 +124,19 @@ public class RazasView extends javax.swing.JFrame {
         RazaRepository razaRepository = new RazaRepository();
         Raza raza = new Raza(fNombre.getText());
         razaRepository.create(raza);
-        javax.swing.JOptionPane.showMessageDialog(this, "Raza guardado exitosamente");
+        JOptionPane.showMessageDialog(this, "Raza guardado exitosamente");
 
         reloadDataTable();
         clearForm();
     }
 
     public Boolean validateForm() {
-        return !fNombre.toString().isEmpty();
+        if (fNombre.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo nombre es requerido");
+            return false;
+        }
+
+        return true;
     }
 
     public void clearForm() {

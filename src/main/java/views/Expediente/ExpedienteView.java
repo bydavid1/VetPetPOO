@@ -9,6 +9,7 @@ import models.Paciente;
 import repositories.ExpedienteRepository;
 import repositories.PacienteRepository;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
@@ -80,6 +81,11 @@ public class ExpedienteView extends javax.swing.JFrame {
         lblFechaNacimiento.setText("fechaNacimiento");
 
         jButton1.setText("Dar de baja");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -161,6 +167,10 @@ public class ExpedienteView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JOptionPane.showMessageDialog(this,  "El paciente tiene datos relacionados");
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public void configPaciente(int idPaciente) {
         PacienteRepository pacienteRepository = new PacienteRepository();
