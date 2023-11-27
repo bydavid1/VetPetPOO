@@ -42,11 +42,11 @@ public class RazaRepository implements IRepository<Raza> {
     }
 
     @Override
-    public Object getById(int id) {
+    public Raza getById(int id) {
         File file = new File(directoryPath + "raza_" + id + ".txt");
         if (file.exists()) {
             try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file))) {
-                return inputStream.readObject();
+                return (Raza) inputStream.readObject();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }

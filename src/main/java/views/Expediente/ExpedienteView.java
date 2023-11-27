@@ -166,6 +166,7 @@ public class ExpedienteView extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -174,7 +175,7 @@ public class ExpedienteView extends javax.swing.JFrame {
 
     public void configPaciente(int idPaciente) {
         PacienteRepository pacienteRepository = new PacienteRepository();
-        Paciente paciente = (Paciente) pacienteRepository.getById(idPaciente);
+        Paciente paciente = pacienteRepository.getById(idPaciente);
         setPacienteInfo(paciente);
 
         jTable1.setModel(loadDataTable(idPaciente));
@@ -189,7 +190,13 @@ public class ExpedienteView extends javax.swing.JFrame {
 
         if (expedientes != null && !expedientes.isEmpty()) {
             for (Expediente expediente : expedientes) {
-                Object[] rowData = {expediente.getDiagnostico(), expediente.getMedicamentos(), expediente.getVacunas(), expediente.getPeso(), expediente.getAltura()};
+                Object[] rowData = {
+                        expediente.getDiagnostico(),
+                        expediente.getMedicamentos(),
+                        expediente.getVacunas(),
+                        expediente.getPeso(),
+                        expediente.getAltura()
+                };
                 model.addRow(rowData);
             }
         }

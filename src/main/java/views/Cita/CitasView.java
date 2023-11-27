@@ -153,6 +153,7 @@ public class CitasView extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblCitasMouseClicked(java.awt.event.MouseEvent evt) {
@@ -161,7 +162,7 @@ public class CitasView extends javax.swing.JFrame {
         int idPaciente = (int) tblCitas.getValueAt(selectedRow, 3);
 
         AgregarExpediente agregarExpediente = new AgregarExpediente();
-        agregarExpediente.configCita(idCita, idPaciente);
+        agregarExpediente.configCita(idPaciente, idCita);
         agregarExpediente.setVisible(true);
     }
 
@@ -195,6 +196,7 @@ public class CitasView extends javax.swing.JFrame {
 
         tblCitas.setModel(llenarCitasTable());
         JOptionPane.showMessageDialog(null, "Cita agendada");
+        System.out.println(cita.getIdPaciente());
     }
 
     private DefaultComboBoxModel llenarPacientesComboBox() {
@@ -208,7 +210,7 @@ public class CitasView extends javax.swing.JFrame {
     private DefaultTableModel llenarCitasTable() {
         CitaRepository citaRepository = new CitaRepository();
         List<Cita> citas = citaRepository.get();
-        Object[][] data = new Object[citas.size()][4];
+        Object[][] data = new Object[citas.size()][5];
 
         for (int i = 0; i < citas.size(); i++) {
             Cita cita = citas.get(i);
@@ -216,9 +218,10 @@ public class CitasView extends javax.swing.JFrame {
             data[i][1] = cita.getFecha();
             data[i][2] = cita.getHora();
             data[i][3] = cita.getIdPaciente();
+            data[i][4] = new PacienteRepository().getById(cita.getIdPaciente()).getNombre();
         }
 
-        String[] columnNames = {"Cod cita", "Fecha", "Hora", "Cod paciente"};
+        String[] columnNames = {"Cod cita", "Fecha", "Hora", "Cod paciente", "Nombre paciente"};
 
         DefaultTableModel model = new DefaultTableModel(data, columnNames);
 

@@ -41,11 +41,11 @@ public class CategoriaRepository implements IRepository<Categoria> {
     }
 
     @Override
-    public Object getById(int id) {
+    public Categoria getById(int id) {
         File file = new File(directoryPath + "categoria_" + id + ".txt");
         if (file.exists()) {
             try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file))) {
-                return inputStream.readObject();
+                return (Categoria) inputStream.readObject();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }

@@ -98,6 +98,7 @@ public class PacientesView extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblPacientesMouseClicked(java.awt.event.MouseEvent evt) {
@@ -134,8 +135,7 @@ public class PacientesView extends javax.swing.JFrame {
         model.addColumn("Categoria");
         model.addColumn("Raza");
 
-        PacienteRepository pacienteRepository = new PacienteRepository();
-        List<Paciente> pacientes = pacienteRepository.get();
+        List<Paciente> pacientes = new PacienteRepository().get();
 
         if (pacientes != null && !pacientes.isEmpty()) {
             for (Paciente paciente : pacientes) {
@@ -146,8 +146,8 @@ public class PacientesView extends javax.swing.JFrame {
                 row[3] = paciente.getEdad();
                 row[4] = paciente.getSexo();
                 row[5] = paciente.getFechaInscripcion();
-                row[6] = paciente.getIdCategoria();
-                row[7] = paciente.getIdRaza();
+                row[6] = new CategoriaRepository().getById(paciente.getIdCategoria()).getNombre();
+                row[7] = new RazaRepository().getById(paciente.getIdRaza()).getNombre();
 
                 model.addRow(row);
             }

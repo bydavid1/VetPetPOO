@@ -98,6 +98,7 @@ public class CategoriasView extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddCategoriaActionPerformed(java.awt.event.ActionEvent evt) {

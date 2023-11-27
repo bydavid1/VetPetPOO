@@ -42,11 +42,11 @@ public class PacienteRepository implements IRepository<Paciente> {
     }
 
     @Override
-    public Object getById(int id) {
+    public Paciente getById(int id) {
         File file = new File(directoryPath + "paciente_" + id + ".txt");
         if (file.exists()) {
             try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file))) {
-                return inputStream.readObject();
+                return (Paciente) inputStream.readObject();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
