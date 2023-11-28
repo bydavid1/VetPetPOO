@@ -8,6 +8,7 @@ import models.Expediente;
 import models.Paciente;
 import repositories.ExpedienteRepository;
 import repositories.PacienteRepository;
+import views.Paciente.AdministrarPacienteView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -19,6 +20,7 @@ import java.util.List;
  */
 public class ExpedienteView extends javax.swing.JFrame {
 
+    private int idPaciente;
     /**
      * Creates new form ExpedienteView
      */
@@ -51,6 +53,7 @@ public class ExpedienteView extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -100,6 +103,13 @@ public class ExpedienteView extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        jButton2.setText("Editar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -121,13 +131,17 @@ public class ExpedienteView extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(lblPelaje, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lblPeso, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblAltura, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblFechaInscripcion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblFechaNacimiento, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE))
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
-                    .addComponent(jSeparator1))
-                .addContainerGap(25, Short.MAX_VALUE))
+                                .addComponent(lblFechaNacimiento, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jButton2)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jButton1)
+                                    .addGap(40, 40, 40)))
+                            .addComponent(lblAltura, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFechaInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jSeparator1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,12 +149,13 @@ public class ExpedienteView extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jButton1))
-                .addGap(24, 24, 24)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombre)
                     .addComponent(lblFechaInscripcion))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombreDueno)
                     .addComponent(lblAltura))
@@ -169,21 +184,42 @@ public class ExpedienteView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    public void setIdPaciente(int idPaciente) {
+        this.idPaciente = idPaciente;
+    }
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         JOptionPane.showMessageDialog(this,  "El paciente tiene datos relacionados");
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public void configPaciente(int idPaciente) {
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        AdministrarPacienteView administrarPacienteView = new AdministrarPacienteView("edit");
+        administrarPacienteView.configPaciente(this.idPaciente);
+
+        final int idPacienteLocal = this.idPaciente;
+        administrarPacienteView.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                PacienteRepository pacienteRepository = new PacienteRepository();
+                Paciente paciente = pacienteRepository.getById(idPacienteLocal);
+                setPacienteInfo(paciente);
+            }
+        });
+
+        administrarPacienteView.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    public void configPaciente() {
         PacienteRepository pacienteRepository = new PacienteRepository();
-        Paciente paciente = pacienteRepository.getById(idPaciente);
+        Paciente paciente = pacienteRepository.getById(this.idPaciente);
         setPacienteInfo(paciente);
 
-        jTable1.setModel(loadDataTable(idPaciente));
+        jTable1.setModel(loadDataTable());
     }
 
-    public DefaultTableModel loadDataTable(int idPaciente) {
+    public DefaultTableModel loadDataTable() {
         ExpedienteRepository expedienteRepository = new ExpedienteRepository();
-        List<Expediente> expedientes = expedienteRepository.getExpedientesByPacienteId(idPaciente);
+        List<Expediente> expedientes = expedienteRepository.getExpedientesByPacienteId(this.idPaciente);
 
         String[] columnNames = {"Diagnostico", "Medicamentos", "Vacunas", "Peso", "Altura"};
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
@@ -255,6 +291,7 @@ public class ExpedienteView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;

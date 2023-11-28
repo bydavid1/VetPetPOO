@@ -9,7 +9,7 @@ import models.Paciente;
 import repositories.CitaRepository;
 import repositories.PacienteRepository;
 import views.Expediente.AgregarExpediente;
-import views.Paciente.AgregarPaciente;
+import views.Paciente.AdministrarPacienteView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -167,7 +167,7 @@ public class CitasView extends javax.swing.JFrame {
     }
 
     private void btnRegistrarPacienteActionPerformed(java.awt.event.ActionEvent evt) {
-        AgregarPaciente agregarPaciente = new AgregarPaciente();
+        AdministrarPacienteView agregarPaciente = new AdministrarPacienteView("create");
         // when view is close reload combobox
         agregarPaciente.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         agregarPaciente.addWindowListener(new java.awt.event.WindowAdapter() {

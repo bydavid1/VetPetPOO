@@ -15,17 +15,24 @@ import javax.swing.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
  * @author byronjimenez
  */
-public class AgregarPaciente extends javax.swing.JFrame {
+public class AdministrarPacienteView extends javax.swing.JFrame {
+
+    private String typeOperation;
+
+    private int idPaciente;
 
     /**
      * Creates new form AgregarPaciente
      */
-    public AgregarPaciente() {
+    public AdministrarPacienteView(String typeOperation) {
+        this.typeOperation = typeOperation;
+        System.out.println("Using: " + this.typeOperation + " operation");
         initComponents();
     }
 
@@ -40,7 +47,7 @@ public class AgregarPaciente extends javax.swing.JFrame {
 
         jLabel6 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         fNombre = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -70,8 +77,8 @@ public class AgregarPaciente extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jLabel1.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 18)); // NOI18N
-        jLabel1.setText("Agregar paciente");
+        lblTitulo.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 18)); // NOI18N
+        lblTitulo.setText(this.typeOperation == "create" ? "Agregar paciente" : "Editar paciente");
 
         jLabel2.setText("Nombre");
 
@@ -131,7 +138,7 @@ public class AgregarPaciente extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,7 +176,7 @@ public class AgregarPaciente extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(lblTitulo)
                         .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
@@ -230,6 +237,21 @@ public class AgregarPaciente extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    public void configPaciente(int id) {
+        this.idPaciente = id;
+        PacienteRepository pacienteRepository = new PacienteRepository();
+        Paciente paciente = pacienteRepository.getById(id);
+
+        fNombre.setText(paciente.getNombre());
+        fDueno.setText(paciente.getNombreDueno());
+        spEdad.setValue(paciente.getEdad());
+        fSexo.setText(paciente.getSexo());
+        spAltura.setValue(paciente.getAltura());
+        spPeso.setValue(paciente.getPeso());
+        fPelaJE.setText(paciente.getPelaje());
+        fFechaNacimiento.setText(paciente.getFechaNacimiento());
+    }
+
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
         if (!validateForm()) {
             return;
@@ -241,16 +263,27 @@ public class AgregarPaciente extends javax.swing.JFrame {
         paciente.setEdad((int) spEdad.getValue());
         paciente.setSexo(fSexo.getText());
         paciente.setFechaInscripcion(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-        paciente.setAltura(((Integer) spAltura.getValue()).doubleValue());
-        paciente.setPeso(((Integer) spPeso.getValue()).doubleValue());
+        paciente.setAltura((Double) spAltura.getValue());
+        paciente.setPeso((Double) spPeso.getValue());
         paciente.setPelaje(fPelaJE.getText());
         paciente.setFechaNacimiento(fFechaNacimiento.getText());
         // Save Paciente object
         PacienteRepository pacienteRepository = new PacienteRepository();
-        pacienteRepository.create(paciente);
+
+        if (Objects.equals(this.typeOperation, "create")) {
+            pacienteRepository.create(paciente);
+        } else {
+            paciente.setId(this.idPaciente);
+            pacienteRepository.update(paciente, this.idPaciente);
+        }
 
         // Show success message
         javax.swing.JOptionPane.showMessageDialog(this, "Paciente guardado exitosamente");
+
+        // if operation is edit, close window
+        if (Objects.equals(this.typeOperation, "edit")) {
+            this.dispose();
+        }
 
         clearForm();
     }
@@ -340,20 +373,24 @@ public class AgregarPaciente extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AgregarPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdministrarPacienteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AgregarPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdministrarPacienteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AgregarPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdministrarPacienteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AgregarPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdministrarPacienteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AgregarPaciente().setVisible(true);
+                new AdministrarPacienteView("sadasd").setVisible(true);
             }
         });
     }
@@ -367,7 +404,6 @@ public class AgregarPaciente extends javax.swing.JFrame {
     private javax.swing.JTextField fNombre;
     private javax.swing.JTextField fPelaJE;
     private javax.swing.JTextField fSexo;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -380,6 +416,7 @@ public class AgregarPaciente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JSpinner spAltura;
     private javax.swing.JSpinner spEdad;
     private javax.swing.JSpinner spPeso;

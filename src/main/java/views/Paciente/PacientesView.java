@@ -106,22 +106,23 @@ public class PacientesView extends javax.swing.JFrame {
         int id = (int) tblPacientes.getValueAt(selectedRow, 0);
 
         ExpedienteView expedienteView = new ExpedienteView();
-        expedienteView.configPaciente(id);
+        expedienteView.setIdPaciente(id);
+        expedienteView.configPaciente();
         expedienteView.setVisible(true);
     }
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {
         // Show AgregarPaciente view
-        AgregarPaciente agregarPaciente = new AgregarPaciente();
+        AdministrarPacienteView administratPacienteView = new AdministrarPacienteView("create");
 
-        agregarPaciente.addWindowListener(new java.awt.event.WindowAdapter() {
+        administratPacienteView.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosed(java.awt.event.WindowEvent windowEvent) {
                 tblPacientes.setModel(loadDataTable());
             }
         });
 
-        agregarPaciente.setVisible(true);
+        administratPacienteView.setVisible(true);
     }
 
     private DefaultTableModel loadDataTable() {
