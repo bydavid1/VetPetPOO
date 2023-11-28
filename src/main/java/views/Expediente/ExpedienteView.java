@@ -188,8 +188,32 @@ public class ExpedienteView extends javax.swing.JFrame {
         this.idPaciente = idPaciente;
     }
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JOptionPane.showMessageDialog(this,  "El paciente tiene datos relacionados");
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        // first ask for confirmation
+        int dialogResult = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea dar de baja a este paciente?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (dialogResult == JOptionPane.YES_OPTION) {
+            // get expedientes and citas by paciente id
+            List<Expediente> expedientes = new ExpedienteRepository().getExpedientesByPacienteId(this.idPaciente);
+            List<models.Cita> citas = new repositories.CitaRepository().getCitasByPacienteId(this.idPaciente);
+
+            // delete expedientes
+            if (expedientes != null && !expedientes.isEmpty()) {
+                for (Expediente expediente : expedientes) {
+                    new ExpedienteRepository().delete(expediente.getId());
+                }
+            }
+
+            // delete citas
+            if (citas != null && !citas.isEmpty()) {
+                for (models.Cita cita : citas) {
+                    new repositories.CitaRepository().delete(cita.getId());
+                }
+            }
+
+            // delete paciente
+            new PacienteRepository().delete(this.idPaciente);
+            this.dispose();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

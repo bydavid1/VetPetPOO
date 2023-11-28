@@ -59,6 +59,12 @@ public class PacienteRepository implements IRepository<Paciente> {
         int newId = get().size(); // Obtener el tamaño actual para generar el próximo ID
         String filePath = directoryPath + "paciente_" + newId + ".txt";
 
+        // check if file exists, if exist add 1 to newId
+        while (new File(filePath).exists()) {
+            newId++;
+            filePath = directoryPath + "paciente_" + newId + ".txt";
+        }
+
         object.setId(newId);
 
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(filePath))) {

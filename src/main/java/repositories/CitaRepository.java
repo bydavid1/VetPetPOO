@@ -89,5 +89,25 @@ public class CitaRepository implements IRepository<Cita> {
             file.delete();
         }
     }
+
+    public List<Cita> getCitasByPacienteId(int idPaciente) {
+        List<Cita> citas = new ArrayList<>();
+        File directory = new File(directoryPath);
+        File[] files = directory.listFiles();
+
+        if (files != null) {
+            for (File file : files) {
+                try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file))) {
+                    Cita cita = (Cita) inputStream.readObject();
+                    if (cita.getIdPaciente() == idPaciente) {
+                        citas.add(cita);
+                    }
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return citas;
+    }
 }
 

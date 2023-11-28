@@ -108,6 +108,15 @@ public class PacientesView extends javax.swing.JFrame {
         ExpedienteView expedienteView = new ExpedienteView();
         expedienteView.setIdPaciente(id);
         expedienteView.configPaciente();
+
+        // create a new window listener
+        expedienteView.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                tblPacientes.setModel(loadDataTable());
+            }
+        });
+        
         expedienteView.setVisible(true);
     }
 
